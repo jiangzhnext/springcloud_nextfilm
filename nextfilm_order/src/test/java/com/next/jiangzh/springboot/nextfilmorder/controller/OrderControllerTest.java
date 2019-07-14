@@ -32,8 +32,8 @@ public class OrderControllerTest extends BaseControllerTest {
         String mvcResult=mockMvc.perform(MockMvcRequestBuilders.get(uri)
                 .param("userId","1")
                 .param("fieldId","1")
-                .param("soldSeats","2")
-                .param("seatsName","第一排2座")
+                .param("soldSeats","1")
+                .param("seatsName","第一排1座")
                 .accept(MediaType.APPLICATION_JSON_UTF8))
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn().getResponse().getContentAsString();
