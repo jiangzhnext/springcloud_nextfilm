@@ -14,6 +14,12 @@
     <name>next_film</name>
     <description>Next学院Film项目实战</description>
 
+    <modules>
+        <module>nextfilm_eureka_server</module>
+        <module>nextfilm_cinema</module>
+        <module>nextfilm_order</module>
+    </modules>
+
     <properties>
         <java.version>1.8</java.version>
         <mybatis.plus.version>3.1.0</mybatis.plus.version>
