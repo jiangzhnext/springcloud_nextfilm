@@ -8,24 +8,17 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <groupId>com.next.jiangzh.springboot</groupId>
-    <artifactId>nextfilm-order</artifactId>
+    <artifactId>nextfilm-util</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>nextfilm-order</name>
-    <description>SpringCloud微服务化以后的订单服务</description>
+    <name>nextfilm-util</name>
+    <description>Nextfilm 公共工具类</description>
 
     <properties>
         <java.version>1.8</java.version>
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.next.jiangzh.springboot</groupId>
-            <artifactId>nextfilm-util</artifactId>
-        </dependency>
+
     </dependencies>
 
     <build>
