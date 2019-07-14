@@ -20,4 +20,8 @@ public interface OrderServiceAPI {
      */
     OrderDetailResVO saveOrder(String seatIds, String seatNames, String fieldId, String userId) throws CommonServiceExcetion;
 
+    /*
+        获取已售座位信息
+     */
+    String describeSoldSeats(String fieldId) throws CommonServiceExcetion;
 }

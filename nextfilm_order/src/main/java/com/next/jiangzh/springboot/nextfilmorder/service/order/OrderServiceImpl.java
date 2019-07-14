@@ -88,6 +88,13 @@ public class OrderServiceImpl implements OrderServiceAPI{
         return orderDetailResVO;
     }
 
+    @Override
+    public String describeSoldSeats(String fieldId) throws CommonServiceExcetion {
+        // 调用订单，获取已售座位信息
+        String soldSeats = filmOrderTMapper.describeSoldSeats(fieldId);
+        return soldSeats;
+    }
+
     // 计算总票价
     private double getTotalPrice(double filmPrice,int seatNum){
         BigDecimal b1 = new BigDecimal(filmPrice);

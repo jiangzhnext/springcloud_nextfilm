@@ -23,7 +23,7 @@ public class OrderControllerTest extends BaseControllerTest {
     }
 
     /*
-        获取影厅信息
+        购票接口测试
      */
     @Test
     public void buyTickets() throws Exception{
@@ -34,6 +34,22 @@ public class OrderControllerTest extends BaseControllerTest {
                 .param("fieldId","1")
                 .param("soldSeats","1")
                 .param("seatsName","第一排1座")
+                .accept(MediaType.APPLICATION_JSON_UTF8))
+                .andDo(MockMvcResultHandlers.print())
+                .andReturn().getResponse().getContentAsString();
+
+        System.out.println("mvcResult="+mvcResult);
+    }
+
+    /*
+        已售座位信息接口测试
+     */
+    @Test
+    public void soldSeats() throws Exception{
+        String uri = "/order/soldseats";
+
+        String mvcResult=mockMvc.perform(MockMvcRequestBuilders.get(uri)
+                .param("fieldId","1")
                 .accept(MediaType.APPLICATION_JSON_UTF8))
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn().getResponse().getContentAsString();
