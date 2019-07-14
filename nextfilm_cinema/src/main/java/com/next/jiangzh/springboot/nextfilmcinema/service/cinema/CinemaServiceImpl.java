@@ -1,5 +1,6 @@
 package com.next.jiangzh.springboot.nextfilmcinema.service.cinema;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -14,12 +15,18 @@ import com.next.jiangzh.springboot.nextfilmcinema.dao.entity.FilmBrandDictT;
 import com.next.jiangzh.springboot.nextfilmcinema.dao.entity.FilmCinemaT;
 import com.next.jiangzh.springboot.nextfilmcinema.dao.entity.FilmHallDictT;
 import com.next.jiangzh.springboot.nextfilmcinema.dao.mapper.*;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class CinemaServiceImpl implements CinemaServiceAPI {
 
@@ -35,6 +42,12 @@ public class CinemaServiceImpl implements CinemaServiceAPI {
     private FilmHallDictTMapper hallDictMapper;
     @Resource
     private FilmBrandDictTMapper brandDictMapper;
+
+    @Autowired
+    private LoadBalancerClient eurekaClient;
+    @Autowired
+    private RestTemplate restTemplate;
+
 
     @Override
     public Page<CinemaVO> describeCinemaInfo(DescribeCinemaRequestVO describeCinemaRequestVO) {
@@ -213,12 +226,43 @@ public class CinemaServiceImpl implements CinemaServiceAPI {
 
         FieldHallInfoVO fieldHallInfoVO = filmFieldMapper.describeHallInfo(fieldId);
         // 调用订单，获取已售座位信息【微服务化】
-
-//        String soldSeats = filmOrderTMapper.describeSoldSeats(fieldId);
-
-        fieldHallInfoVO.setSoldSeats("1");
+        fieldHallInfoVO.setSoldSeats(describeSoldSeats(fieldId));
 
         return fieldHallInfoVO;
+    }
+
+    /*
+        获取已售座位信息
+     */
+    private String describeSoldSeats(String fieldId){
+        String uri = "/order/soldseats?fieldId="+fieldId;
+        // get registry
+        ServiceInstance orderService = eurekaClient.choose("orderService");
+        String hostName = orderService.getHost();
+        int port = orderService.getPort();
+
+        // remote rest call
+        String url = "http://" + hostName + ":" + port + uri;
+
+        JSONObject baseResponse = restTemplate.getForObject(url, JSONObject.class);
+
+        log.info("describeSoldSeats result:{}",baseResponse.toString());
+
+        JSONObject dataObject = baseResponse.getJSONObject("data");
+
+        String soldSeats = dataObject.getString("soldSeats");
+        /*
+            {
+                "state":0,
+                "data":{
+                    "soldSeats":"1,2"
+                }
+            }
+
+
+         */
+
+        return soldSeats;
     }
 
 }

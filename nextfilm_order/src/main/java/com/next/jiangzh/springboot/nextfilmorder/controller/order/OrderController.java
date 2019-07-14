@@ -33,9 +33,6 @@ public class OrderController {
         return BaseResponseVO.success(orderDetailResVO);
     }
 
-    /*
-        获取已售座位信息
-     */
     @RequestMapping(value = "/soldseats", method = RequestMethod.GET)
     public BaseResponseVO soldSeats(String fieldId) throws CommonServiceExcetion {
         // soldSeats 验证是否是未销售的座位
