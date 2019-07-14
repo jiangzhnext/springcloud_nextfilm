@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.next.jiangzh.springboot.nextfilmorder.dao.mapper.FilmFieldTMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.next.jiangzh.springboot.nextfilmorder.dao.entity.FilmFieldT">
+        <id column="UUID" property="uuid" />
+        <result column="cinema_id" property="cinemaId" />
+        <result column="film_id" property="filmId" />
+        <result column="begin_time" property="beginTime" />
+        <result column="end_time" property="endTime" />
+        <result column="hall_id" property="hallId" />
+        <result column="hall_name" property="hallName" />
+        <result column="price" property="price" />
+    </resultMap>
+
+    <select id="describeFilmInfoByFieldId" parameterType="java.util.Map"
+            resultType="com.next.jiangzh.springboot.nextfilmorder.controller.cinema.vo.CinemaFilmInfoVO">
+        SELECT
+            info.`film_id`,
+            info.`film_name`,
+            info.`film_length`,
+            info.`film_language` as `filmType`,
+            info.`film_cats`,
+            info.`actors`,
+            info.`img_address`
+        FROM
+            film_field_t fe LEFT JOIN film_hall_film_info_t info ON fe.`film_id` = info.`film_id`
+        WHERE fe.`UUID` = #{fieldId}
+    </select>
+
+</mapper>
