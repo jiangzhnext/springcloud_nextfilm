@@ -45,6 +45,7 @@ public class CinemaServiceImpl implements CinemaServiceAPI {
 
     @Autowired
     private LoadBalancerClient eurekaClient;
+
     @Autowired
     private RestTemplate restTemplate;
 
@@ -236,13 +237,7 @@ public class CinemaServiceImpl implements CinemaServiceAPI {
      */
     private String describeSoldSeats(String fieldId){
         String uri = "/order/soldseats?fieldId="+fieldId;
-        // get registry
-        ServiceInstance orderService = eurekaClient.choose("orderService");
-        String hostName = orderService.getHost();
-        int port = orderService.getPort();
-
-        // remote rest call
-        String url = "http://" + hostName + ":" + port + uri;
+        String url = "http://orderService" + uri;
 
         JSONObject baseResponse = restTemplate.getForObject(url, JSONObject.class);
 

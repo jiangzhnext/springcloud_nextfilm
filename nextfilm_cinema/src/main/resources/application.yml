@@ -6,6 +6,11 @@ eureka:
     service-url:
       defaultZone: http://localhost:8761/eureka/
 
+orderService:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.BestAvailableRule
+
+
 mybatis-plus:
   mapper-locations: classpath*:com/next/jiangzh/**/xml/*Mapper.xml
   global-config:
