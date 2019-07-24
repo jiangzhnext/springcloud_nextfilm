@@ -16,5 +16,6 @@
 | v4.10 | 总结Nextfilm改造过程 |  |
 | ------ | ------ | ------ |
 | v6.03 | 整合Ribbon，同时加入IRule配置 |  |
+| v6.07 | RibbonClient演示及自定义Rule |  |
 
 

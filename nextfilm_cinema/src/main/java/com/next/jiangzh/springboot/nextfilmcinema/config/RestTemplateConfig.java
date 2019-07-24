@@ -1,5 +1,6 @@
 package com.next.jiangzh.springboot.nextfilmcinema.config;
 
+import com.netflix.loadbalancer.IRule;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +14,5 @@ public class RestTemplateConfig {
     public RestTemplate restTemplate(){
         return new RestTemplate();
     }
-
 
 }
