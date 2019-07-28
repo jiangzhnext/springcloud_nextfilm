@@ -8,6 +8,7 @@ eureka:
 
 orderService:
   ribbon:
+    MaxAutoRetries: 20
     NFLoadBalancerRuleClassName: com.netflix.loadbalancer.BestAvailableRule
 
 
@@ -19,6 +20,10 @@ mybatis-plus:
     refresh-mapper: true
 
 spring:
+  cloud:
+    loadbalancer:
+      retry:
+        enabled: true
   application:
     name: cinemaService
   datasource:
