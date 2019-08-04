@@ -3,6 +3,8 @@ package com.next.jiangzh.springboot.nextfilmcinema.controller.cinema;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import com.next.jiangzh.springboot.nextfilmcinema.controller.cinema.vo.*;
 import com.next.jiangzh.springboot.nextfilmcinema.controller.cinema.vo.condition.AreaResVO;
 import com.next.jiangzh.springboot.nextfilmcinema.controller.cinema.vo.condition.BrandResVO;
@@ -47,10 +49,40 @@ public class CinemaController {
         return BaseResponseVO.success("img.nextfilm.com",result);
     }
 
+    /*
+        降级返回
+     */
+    public BaseResponseVO getFileInfoFallback(@RequestBody FieldInfoRequestVO requestVO){
+        CinemaDetailVO cinemaDetailVO = CinemaDetailVO.builder().build();
+        FieldHallInfoVO fieldHallInfoVO = new FieldHallInfoVO();
+        CinemaFilmInfoVO cinemaFilmInfoVO = new CinemaFilmInfoVO();
 
+        // 组织返回参数
+        Map<String,Object> result = Maps.newHashMap();
+        result.put("filmInfo",cinemaFilmInfoVO);
+        result.put("cinemaInfo",cinemaDetailVO);
+        result.put("hallInfo",fieldHallInfoVO);
+
+        return BaseResponseVO.success("img.nextfilm.com",result);
+    }
+
+    @HystrixCommand(fallbackMethod = "getFileInfoFallback",
+        commandProperties = {
+                @HystrixProperty(name = "execution.isolation.strategy", value = "THREAD"),
+                @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value= "4000"),
+                @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "10"),
+                @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value = "50")
+        },
+        threadPoolProperties = {
+                @HystrixProperty(name = "coreSize", value = "1"),
+                @HystrixProperty(name = "maxQueueSize", value = "10"),
+                @HystrixProperty(name = "keepAliveTimeMinutes", value = "1000"),
+                @HystrixProperty(name = "queueSizeRejectionThreshold", value = "8"),
+                @HystrixProperty(name = "metrics.rollingStats.numBuckets", value = "12"),
+                @HystrixProperty(name = "metrics.rollingStats.timeInMilliseconds", value = "1500")
+    })
     @RequestMapping(value = "/getFieldInfo",method = RequestMethod.POST)
     public BaseResponseVO getFieldInfo(@RequestBody FieldInfoRequestVO requestVO){
-
         // 获取逻辑层调用结果
         CinemaDetailVO cinemaDetailVO = cinemaServiceAPI.describeCinemaDetails(requestVO.getCinemaId());
         FieldHallInfoVO fieldHallInfoVO = cinemaServiceAPI.describeHallInfoByFieldId(requestVO.getFieldId());

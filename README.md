@@ -18,5 +18,7 @@
 | v6.03 | 整合Ribbon，同时加入IRule配置 |  |
 | v6.07 | RibbonClient演示及自定义Rule |  |
 | v6.08 | Ribbon重试机制演示 |  |
+| ------ | ------ | ------ |
+| v8.02 | Hystrix全注解配置 |  |
 
 
