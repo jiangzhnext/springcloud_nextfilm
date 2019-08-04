@@ -11,6 +11,11 @@ orderService:
     MaxAutoRetries: 20
     NFLoadBalancerRuleClassName: com.netflix.loadbalancer.BestAvailableRule
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 
 mybatis-plus:
   mapper-locations: classpath*:com/next/jiangzh/**/xml/*Mapper.xml
