@@ -42,10 +42,6 @@
             <groupId>com.next.jiangzh.springboot</groupId>
             <artifactId>nextfilm-util</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.next.jiangzh.springboot</groupId>
-            <artifactId>nextfilm-openapi</artifactId>
-        </dependency>
     </dependencies>
 
     <build>
