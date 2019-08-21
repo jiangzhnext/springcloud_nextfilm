@@ -5,6 +5,9 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
+import com.netflix.discovery.converters.Auto;
+import com.next.jiangzh.film.controller.common.BaseResponseVO;
+import com.next.jiangzh.film.service.common.exception.CommonServiceExcetion;
 import com.next.jiangzh.springboot.nextfilmcinema.controller.cinema.vo.*;
 import com.next.jiangzh.springboot.nextfilmcinema.controller.cinema.vo.condition.AreaResVO;
 import com.next.jiangzh.springboot.nextfilmcinema.controller.cinema.vo.condition.BrandResVO;
@@ -48,6 +51,9 @@ public class CinemaServiceImpl implements CinemaServiceAPI {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Autowired
+    private OrderServiceAPI orderServiceAPI;
 
 
     @Override
@@ -236,28 +242,48 @@ public class CinemaServiceImpl implements CinemaServiceAPI {
         获取已售座位信息
      */
     private String describeSoldSeats(String fieldId){
-        String uri = "/order/soldseats?fieldId="+fieldId;
-        String url = "http://orderService" + uri;
+        try {
+            BaseResponseVO result = orderServiceAPI.soldSeats(fieldId);
 
-        JSONObject baseResponse = restTemplate.getForObject(url, JSONObject.class);
+            JSONObject jsonObject = (JSONObject)JSONObject.toJSON(result);
 
-        log.info("describeSoldSeats result:{}",baseResponse.toString());
+            JSONObject dataObject = jsonObject.getJSONObject("data");
 
-        JSONObject dataObject = baseResponse.getJSONObject("data");
+            String soldSeats = dataObject.getString("soldSeats");
+            System.out.println("new soldSeats = "+soldSeats);
+            return soldSeats;
+        } catch (CommonServiceExcetion e) {
+            e.printStackTrace();
+        }
 
-        String soldSeats = dataObject.getString("soldSeats");
-        /*
-            {
-                "state":0,
-                "data":{
-                    "soldSeats":"1,2"
-                }
-            }
-
-
-         */
-
-        return soldSeats;
+        return "";
     }
+    /*
+        获取已售座位信息
+     */
+//    private String describeSoldSeats(String fieldId){
+//        String uri = "/order/soldseats?fieldId="+fieldId;
+//        String url = "http://orderService" + uri;
+//
+//        JSONObject baseResponse = restTemplate.getForObject(url, JSONObject.class);
+//
+//        log.info("describeSoldSeats result:{}",baseResponse.toString());
+//
+//        JSONObject dataObject = baseResponse.getJSONObject("data");
+//
+//        String soldSeats = dataObject.getString("soldSeats");
+//        /*
+//            {
+//                "state":0,
+//                "data":{
+//                    "soldSeats":"1,2"
+//                }
+//            }
+//
+//
+//         */
+//
+//        return soldSeats;
+//    }
 
 }
