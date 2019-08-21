@@ -19,6 +19,7 @@
         <module>nextfilm_cinema</module>
         <module>nextfilm_order</module>
         <module>nextfilm_util</module>
+        <module>nextfilm-webapi</module>
     </modules>
 
     <properties>
@@ -185,6 +186,11 @@
             <dependency>
                 <groupId>com.next.jiangzh.springboot</groupId>
                 <artifactId>nextfilm-util</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.next.jiangzh.springboot</groupId>
+                <artifactId>nextfilm-webapi</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
