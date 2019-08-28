@@ -118,6 +118,14 @@ public class CinemaController {
             @RequestParam(name = "areaId",required = false,defaultValue = "99")Integer areaId
     ){
 
+        if(brandId.equals(77)){
+            try {
+                System.err.println("getCondition hystrix= "+ brandId);
+                Thread.sleep(1300);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         if(brandId.equals(79)){
             try {
                 System.err.println("getCondition = "+ brandId);
