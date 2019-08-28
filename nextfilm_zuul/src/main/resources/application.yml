@@ -11,9 +11,18 @@ zuul:
     cinema:
       path: /cinemaapi/**
       serviceId: cinemaService
+      retryable: true
     order:
       path: /orderapi/**
       serviceId: orderService
+      retryable: true
+
+ribbon:
+  ConnectTimeout: 200
+  ReadTimeout: 2000
+  OkToRetryOnAllOperations: true
+  MaxAutoRetriesNextServer: 1
+  MaxAutoRetries: 1
 
 mybatis-plus:
   mapper-locations: classpath*:com/next/jiangzh/**/xml/*Mapper.xml

@@ -118,6 +118,14 @@ public class CinemaController {
             @RequestParam(name = "areaId",required = false,defaultValue = "99")Integer areaId
     ){
 
+        if(brandId.equals(79)){
+            try {
+                System.err.println("getCondition = "+ brandId);
+                Thread.sleep(6000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         // 验证id是否有效
         if(!cinemaServiceAPI.checkCondition(brandId,"brand")){
             brandId = 99;
