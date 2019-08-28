@@ -20,6 +20,7 @@
         <module>nextfilm_order</module>
         <module>nextfilm_util</module>
         <module>nextfilm-webapi</module>
+        <module>nextfilm_zuul</module>
     </modules>
 
     <properties>
