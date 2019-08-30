@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: zuulService
+  cloud:
+    config:
+      uri: http://localhost:8800/
+      label: master

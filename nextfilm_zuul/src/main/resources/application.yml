@@ -1,6 +1,12 @@
 server:
   port: 8701
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, refresh
+
 eureka:
   client:
     service-url:

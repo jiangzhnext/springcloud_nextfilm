@@ -8,7 +8,22 @@ mybatis-plus:
     db-column-underline: false
     refresh-mapper: true
 
+
 spring:
+  cloud:
+    config:
+      label: master
+      server:
+        git:
+          uri: https://github.com/woaijiadanoo/springconfig.git
+          username: woaijiadanoo
+          password: jiangzh_next@123
+          repos:
+            zuulService:
+              pattern: zuulService/**
+              uri: https://github.com/woaijiadanoo/next_zuul.git
+          basedir: ./nextfilm_config_server/gitdata
+          clone-on-start: true
   application:
     name: config-server
   datasource:
