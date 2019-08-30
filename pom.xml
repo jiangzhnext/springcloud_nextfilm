@@ -16,6 +16,7 @@
 
     <modules>
         <module>nextfilm_eureka_server</module>
+        <module>nextfilm_config_server</module>
         <module>nextfilm_cinema</module>
         <module>nextfilm_order</module>
         <module>nextfilm_util</module>
