@@ -34,4 +34,5 @@
 | v14.02 | SpringCloud Config基础环境构建 |  |
 | v14.03 | ConfigServer配置演示 |  |
 | v14.05 | SpringCloud Config修改Hystrix配置演示 |  |
+| v14.07 | ConfigServer加解密演示 |  |
 
